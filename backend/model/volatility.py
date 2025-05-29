@@ -5,8 +5,8 @@ import numpy as np
 
 ticker = "AAPL"
 data = yf.Ticker(ticker)
-hist = data.history(period="252d")
-
+hist = data.history(period="1d")
+print(hist)
 
 
 def historical_volatility(ticker, period):
@@ -50,3 +50,33 @@ def parkinsons_volatility(ticker, period):
     parkinson_constant = 1/(4 * np.log(2)) #constant
     log_prices_squared = parkinson_constant * prices_squared #apply c to list 
     return np.sqrt(np.mean(log_prices_squared)) * np.sqrt(252) #find the averaqe
+
+
+def garman_klass_volatility(ticker, period):
+    """
+    Calculate Garman-Klass volatility of a stock in a given period.
+
+    Parameters: 
+    ticker: Stock ticker
+    period: Period in trading days to calculate volatility
+
+    Returns: Annualized Garman-Klass volatility as a float
+
+    """
+    data = yf.Ticker(ticker)
+    hist = data.history(period=f"{period}d")
+    open_prices = np.array(hist["Open"])
+    close_prices = np.array(hist["Close"])
+    high_prices = np.array(hist["High"])
+    low_prices = np.array(hist["Low"])
+
+    log_hl_squared = np.log(high_prices/low_prices) ** 2
+    term1 = 0.5 * log_hl_squared
+
+    log_co_squared = np.log(close_prices/open_prices)**2
+    term2 = (2*np.log(2) - 1) * log_co_squared
+
+    diff = term1-term2
+    return np.sqrt(np.mean(diff)) * np.sqrt(252)
+
+print(garman_klass_volatility(ticker, 1))
