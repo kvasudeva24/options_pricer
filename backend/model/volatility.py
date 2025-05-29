@@ -5,30 +5,30 @@ import numpy as np
 
 ticker = "AAPL"
 data = yf.Ticker(ticker)
-hist = data.history(period="1d")
+hist = data.history(period="3d")
 print(hist)
 
 
-def historical_volatility(ticker, period):
+def historical_log_volatility(ticker, period):
     """
-    Calculate historical volatility (on closing prices) of a stock in a given period.
+    Calculate annualized historical volatility using log returns.
     
-    Parameters:
+    Parameters: 
     ticker: Stock ticker
-    period: Period in days to calculate volatility
+    period: Number of trading days
 
-    Returns: Historical volatility as a float
+    Returns: Annualized historical volatility (float)
     """
-    data = yf.Ticker(ticker) #fetch data
-    hist = data.history(period=f"{period}d") #get historical data 
-    closing_prices = hist["Close"] 
-    closing_prices = np.array(closing_prices) #get values as numpy array
-    returns = np.zeros(closing_prices.shape[0]) #initialize returns
-    for i in range(1, len(closing_prices)):
-        returns[i] = ((closing_prices[i] - closing_prices[i-1])/closing_prices[i-1])
-    returns = returns[1:] #remove first element 
-    volatility = np.std(returns) #Std dev of returns
-    return volatility * np.sqrt(252) #Annualize the volatility
+    data = yf.Ticker(ticker)
+    hist = data.history(period=f"{period}d")
+    closing_prices = np.array(hist["Close"])
+    
+    # Log returns
+    log_returns = np.log(closing_prices[1:] / closing_prices[:-1])
+    
+    # Daily std dev of log returns, then annualize
+    daily_vol = np.std(log_returns, ddof=1)  # ddof=1 for sample std
+    return daily_vol * np.sqrt(252)
 
 def parkinsons_volatility(ticker, period):
     """
@@ -68,15 +68,47 @@ def garman_klass_volatility(ticker, period):
     open_prices = np.array(hist["Open"])
     close_prices = np.array(hist["Close"])
     high_prices = np.array(hist["High"])
-    low_prices = np.array(hist["Low"])
+    low_prices = np.array(hist["Low"]) #get data
 
     log_hl_squared = np.log(high_prices/low_prices) ** 2
-    term1 = 0.5 * log_hl_squared
+    term1 = 0.5 * log_hl_squared #term 1
 
     log_co_squared = np.log(close_prices/open_prices)**2
-    term2 = (2*np.log(2) - 1) * log_co_squared
+    term2 = (2*np.log(2) - 1) * log_co_squared #term 2
 
-    diff = term1-term2
-    return np.sqrt(np.mean(diff)) * np.sqrt(252)
+    diff = term1-term2 #calculate diff
+    return np.sqrt(np.mean(diff)) * np.sqrt(252) #return annulaized 
 
-print(garman_klass_volatility(ticker, 1))
+
+def rogers_satchell_volatility(ticker, period):
+    """
+    Calculate Rogers-Satchell volatility of a stock in a given period.
+    
+
+    Parameters: 
+    ticker: Stock ticker
+    period: Period in trading days to calculate volatility
+
+    Returns: Annualized Rogers-Satchell volatility as a float
+
+    """
+
+    data = yf.Ticker(ticker)
+    hist = data.history(period=f"{period}d")
+    open_prices = np.array(hist["Open"])
+    close_prices = np.array(hist["Close"])
+    high_prices = np.array(hist["High"])
+    low_prices = np.array(hist["Low"]) #get the data
+
+    term1 = np.log(high_prices/close_prices)
+    term2 = np.log(high_prices/open_prices)
+    term3 = np.log(low_prices/close_prices)
+    term4 = np.log(low_prices/open_prices) #find the terms
+
+    t12 = term1 * term2
+    t34 = term3*term4
+    summ = t12 + t34 #math
+    return np.sqrt(np.mean(summ)) * np.sqrt(252) #return annulaized volatility
+
+    
+
