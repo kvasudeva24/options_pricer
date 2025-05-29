@@ -3,11 +3,6 @@ import pandas as pd
 import numpy as np
 
 
-ticker = "AAPL"
-data = yf.Ticker(ticker)
-hist = data.history(period="3d")
-print(hist)
-
 
 def historical_log_volatility(ticker, period):
     """
@@ -110,5 +105,44 @@ def rogers_satchell_volatility(ticker, period):
     summ = t12 + t34 #math
     return np.sqrt(np.mean(summ)) * np.sqrt(252) #return annulaized volatility
 
+
+def yang_zhang_volatility(ticker, period):
+    """
+    Calculate Yang-Zhang volatility of a stock in a given period.
     
+
+    Parameters: 
+    ticker: Stock ticker
+    period: Period in trading days to calculate volatility
+
+    Returns: Annualized Yang-Zhang volatility as a float
+
+    """
+
+    data = yf.Ticker(ticker)
+    hist = data.history(period=f"{period}d")
+    open_prices = np.array(hist["Open"])
+    close_prices = np.array(hist["Close"])
+    high_prices = np.array(hist["High"])
+    low_prices = np.array(hist["Low"]) #get the data
+
+    log_cc_returns = np.log(close_prices[1:]/close_prices[:-1])
+    close_close_variance = np.var(log_cc_returns, ddof=1)
+
+    log_overnight_returns = np.log(open_prices[1:]/close_prices[:-1])
+    overnight_variance = np.var(log_overnight_returns, ddof=1)
+
+    term1 = np.log(high_prices/close_prices)
+    term2 = np.log(high_prices/open_prices)
+    term3 = np.log(low_prices/close_prices)
+    term4 = np.log(low_prices/open_prices) #find the terms
+
+    t12 = term1 * term2
+    t34 = term3*term4
+    summ = t12 + t34 #math
+    rs_variance = np.mean(summ)
+
+    k = 0.34/(1.34 + ((period+1)/(period-1)))
+
+    return np.sqrt((k*overnight_variance) + (1-k)*close_close_variance + rs_variance) * np.sqrt(252)
 
