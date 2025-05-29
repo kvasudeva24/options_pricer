@@ -6,7 +6,8 @@ import numpy as np
 ticker = "AAPL"
 data = yf.Ticker(ticker)
 hist = data.history(period="252d")
-returns = hist["Close"]
+
+
 
 def historical_volatility(ticker, period):
     """
@@ -29,5 +30,23 @@ def historical_volatility(ticker, period):
     volatility = np.std(returns) #Std dev of returns
     return volatility * np.sqrt(252) #Annualize the volatility
 
+def parkinsons_volatility(ticker, period):
+    """
+    Calculate parkinsons volatility of a stock in a given period.
 
+    Parameters: 
+    ticker: Stock ticker
+    period: Period in trading days to calculate volatility
 
+    Returns: Annualized Parkinsons volatility as a float
+
+    """
+
+    data = yf.Ticker(ticker)
+    hist = data.history(period=f"{period}d")
+    high_prices = np.array(hist["High"]) #high prices
+    low_prices = np.array(hist["Low"]) #low prices
+    prices_squared = np.log(high_prices/low_prices) ** 2 #ratio^^2
+    parkinson_constant = 1/(4 * np.log(2)) #constant
+    log_prices_squared = parkinson_constant * prices_squared #apply c to list 
+    return np.sqrt(np.mean(log_prices_squared)) * np.sqrt(252) #find the averaqe
