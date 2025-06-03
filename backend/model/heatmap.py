@@ -27,6 +27,7 @@ for i, row in call_opt.iterrows():
 filtered = pd.DataFrame(filtered_rows)
 print(filtered) #getting all the prices within 20% of an option 
 
+data_array = [[]]
 
 
 print(type(call_opt)) #it is a pandas dataframe
