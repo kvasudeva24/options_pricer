@@ -4,9 +4,11 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import io 
+import base64
 from pricer import (call_option, put_option)
 
-def call_option_heatmap(ticker, vol_option, vol_period):
+def call_option_heatmap(ticker, option_vol, period_vol):
     data = yf.Ticker(ticker)
     all_dates = data.options[:5]  # first 5 expiry dates
 
@@ -32,7 +34,7 @@ def call_option_heatmap(ticker, vol_option, vol_period):
 
             listed_price = (row['bid'] + row['ask']) / 2
             try:
-                calc_price = call_option(ticker, vol_option, vol_period, days_to_expiry, strike)
+                calc_price = call_option(ticker, option_vol, period_vol, days_to_expiry, strike)
                 if np.isnan(calc_price):
                     continue
             except Exception:
@@ -64,10 +66,15 @@ def call_option_heatmap(ticker, vol_option, vol_period):
     plt.xticks(rotation=45, ha="right", fontsize=8)
     plt.yticks(fontsize=8)
     plt.tight_layout()
-    plt.show()
 
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    plt.close() 
+    buf.seek(0)
+    img_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    return img_base64
 
-def put_option_heatmap(ticker, vol_option, vol_period):
+def put_option_heatmap(ticker, option_vol, period_vol):
     data = yf.Ticker(ticker)
     all_dates = data.options[:5]  # first 5 expiry dates
 
@@ -93,7 +100,7 @@ def put_option_heatmap(ticker, vol_option, vol_period):
 
             listed_price = (row['bid'] + row['ask']) / 2
             try:
-                calc_price = put_option(ticker, vol_option, vol_period, days_to_expiry, strike)
+                calc_price = put_option(ticker, option_vol, period_vol, days_to_expiry, strike)
                 if np.isnan(calc_price):
                     continue
             except Exception:
@@ -125,4 +132,10 @@ def put_option_heatmap(ticker, vol_option, vol_period):
     plt.xticks(rotation=45, ha="right", fontsize=8)
     plt.yticks(fontsize=8)
     plt.tight_layout()
-    plt.show()
+    
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')
+    plt.close() 
+    buf.seek(0)
+    img_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    return img_base64
