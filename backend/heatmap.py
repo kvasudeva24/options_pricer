@@ -6,7 +6,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import io 
 import base64
-from pricer import (call_option, put_option)
+from .pricer import (call_option, put_option)
 
 def call_option_heatmap(ticker, option_vol, period_vol):
     data = yf.Ticker(ticker)
