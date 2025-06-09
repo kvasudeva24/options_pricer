@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [optionType, setOptionType] = useState('select'); 
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="header">
+        <h1 className="site-title">Options Pricer</h1>
       </header>
+      <div className="intro">
+        <p>
+          Welcome to the site! This site is a dynamic options pricer (call & put)
+          that has custom volatility entries with 5 different types. You can
+          customize ticker symbol, time to expiration, period of measured
+          volatility, and other parameters. I hope you find it useful!
+        </p>
+      </div>
+      <div className="userInputs">
+        <select
+          className="optionInput"
+          value={optionType}
+          onChange={(e) => setOptionType(e.target.value)}
+        >
+          <option value="select">Select Option Type</option>
+          <option value="call">Call Option</option>
+          <option value="put">Put Option</option>
+        </select>
+        <input className="tickerInput" type = "text" placeholder='Ticker Symbol'/>
+      </div>
     </div>
   );
 }
