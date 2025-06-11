@@ -55,6 +55,7 @@ body {
   font-weight: 400;
   font-style: normal;
   text-align: center;
+  margin-right: 5px;
 }
 
 
@@ -70,6 +71,7 @@ body {
   font-weight: 400;
   font-style: normal;
   color: #6a0fba;
+  margin-right: 5px;
 }
 
 .tickerInput::placeholder{
@@ -77,4 +79,90 @@ body {
   font-weight: 400;
   font-style: normal;
   color: black;
+}
+
+.volatilityInput {
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  margin-top: 10px;
+  width: 220px;
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  margin-right: 5px;
+}
+
+
+.strikeInput{
+  padding: 10px 16px;
+  font-size: 17px;
+  border-radius: 6px;
+  margin-top: 10px;
+  width: 200px;
+  text-align: center;
+  background-color: white;
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #6a0fba;
+  margin-right: 5px;
+}
+
+.strikeInput::placeholder{
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: black;
+}
+
+.daysInput{
+  padding: 10px 16px;
+  font-size: 17px;
+  border-radius: 6px;
+  margin-top: 10px;
+  width: 200px;
+  text-align: center;
+  background-color: white;
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #6a0fba;
+  margin-right: 5px;
+}
+
+.daysInput::placeholder{
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: black;
+}
+
+.volatilityDaysInput::placeholder{
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: black;
+}
+
+.volatilityDaysInput{
+  padding: 10px 16px;
+  font-size: 17px;
+  border-radius: 6px;
+  margin-top: 10px;
+  width: 200px;
+  text-align: center;
+  background-color: white;
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #6a0fba;
+  margin-right: 5px;
+}
+
+.userInputs{
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1400px;
 }
