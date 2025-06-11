@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import './App.css';
+import './index.js';
 
 function App() {
   const [optionType, setOptionType] = useState('select'); 
   const [volatilityType, setVolatilityType] = useState('select');
+
+  function setPrice(){
+    document.getElementById("strikeInput").value = "100";
+  }
 
   return (
     <div className="App">
@@ -29,7 +34,7 @@ function App() {
           <option value="put">Put Option</option>
         </select>
         <input className="tickerInput" type = "text" placeholder='Ticker Symbol'/>
-        <input className="strikeInput" type = "text" placeholder='Strike Price'/>
+        <input id="strikeInput"className="strikeInput" type = "text" placeholder='Strike Price'/>
         <input className="daysInput" type = "text" placeholder='Trading Days to Expiry'/>
         <select
           className="volatilityInput"
@@ -44,6 +49,10 @@ function App() {
             <option value="yang-zhang">Yang-Zhang</option>
           </select>
           <input className="volatilityDaysInput" type = "text" placeholder="Period of Vol. (days)"/>
+      </div>
+      <div className = "buttonContainer">
+        <button className="priceButton">Generate Your Option Price</button>
+        <button className="heatmapButton" onClick={setPrice}>Generate Dynamic Heatmap</button>
       </div>
     </div>
   );
