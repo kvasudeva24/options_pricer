@@ -6,7 +6,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import io 
 import base64
-from .pricer import (call_option, put_option)
+from backend.pricer import (call_option, put_option)
 
 def call_option_heatmap(ticker, option_vol, period_vol):
     data = yf.Ticker(ticker)
@@ -32,7 +32,10 @@ def call_option_heatmap(ticker, option_vol, period_vol):
             if days_to_expiry <= 0:
                 continue
 
-            listed_price = (row['bid'] + row['ask']) / 2
+            bid = row['bid']
+            ask = row['ask']
+
+            listed_price = (bid + ask) / 2
             try:
                 calc_price = call_option(ticker, option_vol, period_vol, days_to_expiry, strike)
                 if np.isnan(calc_price):
@@ -66,7 +69,6 @@ def call_option_heatmap(ticker, option_vol, period_vol):
     plt.xticks(rotation=45, ha="right", fontsize=8)
     plt.yticks(fontsize=8)
     plt.tight_layout()
-
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')
     plt.close() 

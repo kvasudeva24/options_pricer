@@ -4,7 +4,7 @@ import yfinance as yf
 from scipy.stats import norm
 
 # Volatility models
-from .volatility import (
+from backend.volatility import (
     historical_log_volatility,
     parkinsons_volatility,
     garman_klass_volatility,
