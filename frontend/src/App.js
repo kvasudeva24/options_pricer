@@ -6,9 +6,8 @@ function App() {
   const [optionType, setOptionType] = useState('select'); 
   const [volatilityType, setVolatilityType] = useState('select');
 
-
-//function to calculate the option price based on user inputs
-function calculateOptionPrice() {
+//function to set the price output with animation
+function setPriceOutput() {
   const volatilityMap = {
     "select": 0,
     "historical": 1,
@@ -28,19 +27,11 @@ function calculateOptionPrice() {
   if(userOptionChoice === 'select' || !userTicker || isNaN(userDays) ||
     isNaN(userStrike) || userVolatilityType === 0 || userVolatilityDays < 2){
     alert("Please enter valid inputs");
-    return Promise.resolve(null);
+    return;
   }
 
   if(userOptionChoice === 'call'){
-    return calculateCallOption(userTicker, userStrike, userDays, userVolatilityType, userVolatilityDays);
-  } else {
-    return Promise.resolve(null);  // For now
-  }
-}
-
-
-function calculateCallOption(userTicker, userStrike, userDays, userVolatilityType, userVolatilityDays){
-  const data = {
+    const data = {
     ticker: userTicker,
     option_vol: userVolatilityType,
     period_vol: userVolatilityDays,
@@ -48,68 +39,61 @@ function calculateCallOption(userTicker, userStrike, userDays, userVolatilityTyp
     strike: userStrike
   };
 
-  const endpoint = 'http://localhost:5000/api/call-price';
+    const endpoint = 'http://localhost:8000/api/call-price';
 
-  return fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type' : 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(response => {
-    if (response.price !== undefined && response.price !== null) {
-      return response.price;
-    } else {
-      alert("Server side issue: " + response.error);
-      return null;
-    }
-  })
-  .catch(error => {
-    alert("Error fetching request: " + error.message);
-    return null;
-  });
-}
-
-
-//function to set the price output with animation
-function setPriceOutput() {
-  const output = document.getElementById("outputPrice");
-  const rawValue = output.innerText.replace('$', '');
-  const startValue = isNaN(parseFloat(rawValue)) ? 0 : parseFloat(rawValue);
-  const duration = 800;
-  const start = performance.now();
-
-  calculateOptionPrice().then(finalValue => {
-    if (typeof finalValue !== 'number' || isNaN(finalValue)) {
-      return;
-    }
-
-    output.style.color = "#34eb46";
-
-    function animate(time) {
-      const elapsed = time - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const currentValue = (startValue + (finalValue - startValue) * progress).toFixed(2);
-      output.innerText = `$${currentValue}`;
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(response => {
+      if (response.price !== undefined && response.price !== null) {
+        document.getElementById("outputPrice").innerText = "$" + response.price.toFixed(2);
+      } else {
+        alert("Server side issue: " + response.error);
+        return;
       }
-    }
+    })
+    .catch(error => {
+      alert("Error fetching request: " + error.message);
+      return;
+    });
+  } else {
+    const data = {
+    ticker: userTicker,
+    option_vol: userVolatilityType,
+    period_vol: userVolatilityDays,
+    period_opt: userDays,
+    strike: userStrike
+    };
 
-    requestAnimationFrame(animate);
-  });
+    const endpoint = 'http://localhost:8000/api/put-price';
+
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(response => {
+      if (response.price !== undefined && response.price !== null) {
+        document.getElementById("outputPrice").innerText = "$" + response.price.toFixed(2);
+      } else {
+        alert("Server side issue: " + response.error);
+        return;
+      }
+    })
+    .catch(error => {
+      alert("Error fetching request: " + error.message);
+      return;
+    });
+  }
 }
-
-
-
-
-
-
-
-
 
 
 
