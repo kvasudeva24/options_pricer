@@ -235,5 +235,10 @@ body {
   padding: 10px 16px;
   border-radius: 6px;
   margin-left: 17%;
-  transition: color 0.4s ease; /* smooth font color change */
+  transition: color 1s ease, transform 0.3s ease;
+}
+
+.outputPrice.green-flash {
+  color: #34eb46;
+  transform: scale(2);
 }

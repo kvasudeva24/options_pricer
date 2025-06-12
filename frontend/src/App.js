@@ -51,7 +51,11 @@ function setPriceOutput() {
     .then(response => response.json())
     .then(response => {
       if (response.price !== undefined && response.price !== null) {
-        document.getElementById("outputPrice").innerText = "$" + response.price.toFixed(2);
+        const outputEl = document.getElementById("outputPrice");
+        outputEl.innerText = "$" + response.price.toFixed(2);
+        outputEl.classList.remove("green-flash");
+        void outputEl.offsetWidth; 
+        outputEl.classList.add("green-flash");
       } else {
         alert("Server side issue: " + response.error);
         return;
@@ -82,7 +86,11 @@ function setPriceOutput() {
     .then(response => response.json())
     .then(response => {
       if (response.price !== undefined && response.price !== null) {
-        document.getElementById("outputPrice").innerText = "$" + response.price.toFixed(2);
+        const outputEl = document.getElementById("outputPrice");
+        outputEl.innerText = "$" + response.price.toFixed(2);
+        outputEl.classList.remove("green-flash");
+        void outputEl.offsetWidth; 
+        outputEl.classList.add("green-flash");
       } else {
         alert("Server side issue: " + response.error);
         return;
