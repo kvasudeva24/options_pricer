@@ -158,6 +158,7 @@ function setPriceOutput() {
       </div>
       <div className="outputContainer">
         <output className="outputPrice" id="outputPrice">$0.00</output>
+        <img id="heatmapImage" alt="Heatmap" style={{ width: '100%', height: 'auto' }} />
       </div>
     </div>
   );
