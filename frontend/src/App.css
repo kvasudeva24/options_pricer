@@ -242,3 +242,16 @@ body {
   color: #34eb46;
   transform: scale(2);
 }
+
+.heatmapOutput{
+  margin-top: 80px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heatMapImage{
+  width: 1000px;
+  height: 500px; 
+  border: 2px solid white;
+}
