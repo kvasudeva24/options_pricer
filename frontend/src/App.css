@@ -177,8 +177,6 @@ body {
   font-weight: 400;
   font-style: normal;
   border-radius: 10px;
-  margin-left: 15%;
-
 }
 
 .priceButton:hover{
@@ -202,7 +200,6 @@ body {
   font-weight: 400;
   font-style: normal;
   border-radius: 10px;
-  margin-left: 37%;
 }
 
 .heatmapButton:hover{
@@ -216,42 +213,80 @@ body {
   color: white;
 }
 
+.heatmapContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 65px;
+}
+
 
 .buttonContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 40px;
 }
 
 .outputContainer{
-  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
 }
 
 .outputPrice {
   background-color: #1c1c1c;
-  color: white;
+  color: #34eb46;
   font-family: "Darumadrop One", sans-serif;
   font-weight: 400;
   font-style: normal;
   font-size: 48px;
   padding: 10px 16px;
   border-radius: 6px;
-  margin-left: 17%;
   transition: color 1s ease, transform 0.3s ease;
 }
 
-.outputPrice.green-flash {
-  color: #34eb46;
-  transform: scale(2);
-}
-
 .heatmapOutput{
-  margin-top: 80px; 
+  margin-top: 20px; 
+  margin-bottom: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .heatMapImage{
-  width: 1000px;
-  height: 500px; 
+  width: 1250px;
+  height: 650px; 
   border: 2px solid white;
+}
+
+
+.reset{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resetButton{
+  width: 175px;
+  height: 50px;
+  font-size: large;
+  color: white;
+  background-color: #6a0fba;
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  border-radius: 10px;
+}
+
+.resetButton:hover{
+  cursor: pointer;
+  background-color: white;
+  color: black;
+}
+
+.resetButton:active{
+  background-color: #6a0fba;
+  color: white;
 }

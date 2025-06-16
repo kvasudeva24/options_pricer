@@ -6,6 +6,22 @@ function App() {
   const [optionType, setOptionType] = useState('select'); 
   const [volatilityType, setVolatilityType] = useState('select');
 
+  function resetAll(){
+    let heatmapOut = document.getElementById("heatmapImage");
+    heatmapOut.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=";
+    
+    document.getElementById("tickerInput").value = "";
+    document.getElementById("strikeInput").value = "";
+    document.getElementById("daysInput").value = "";
+    document.getElementById("volatilityDaysInput").value = "";
+
+    document.getElementById("optionInput").value = "select";
+    document.getElementById("volatilityInput").value = "select";
+
+    document.getElementById("outputPrice").innerText = "$0.00"
+  }
+
+
   function setHeatmapOutput() {
     const volatilityMap = {
       "select": 0,
@@ -16,8 +32,6 @@ function App() {
       "yang-zhang": 5
     };
 
-    let heatmapOut = document.getElementById("heatmapImage");
-    
     const userOptionChoice = document.getElementById("optionInput").value;
     const userTicker = document.getElementById("tickerInput").value;
     const userVolatilityType = volatilityMap[document.getElementById("volatilityInput").value];
@@ -37,17 +51,57 @@ function App() {
 
       const endpoint = 'http://localhost:8000/api/call-heatmap'
 
-      return fetch({
+      return fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json'
         },
         body: JSON.stringify(data)
       })
+      .then(response => response.json())
+      .then(response =>{
+        if(response.heatmap !== undefined && response.heatmap !== null){
+            let heatmapOut = document.getElementById("heatmapImage");
+            heatmapOut.src = "data:image/png;base64," + response.heatmap;
+        } else {
+          alert("Server side issue: " + response.error);
+          return;
+        }
+      })
+      .catch(error => {
+        alert("Error fecthing request: " + error.message);
+        return;
+      });
+    } else {
+      const data = {
+        ticker: userTicker, 
+        option_vol: userVolatilityType,
+        period_vol: userVolatilityDays
+      };
 
+      const endpoint = 'http://localhost:8000/api/put-heatmap';
 
-
-      
+      return fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(response => {
+        if(response.heatmap !== undefined && response.heatmap !== null){
+          let heatmapOut = document.getElementById("heatmapImage");
+          heatmapOut.src = "data:image/png;base64," + response.heatmap;
+        } else {
+          alert("Server side error: " + response.error);
+          return;
+        }
+      })
+      .catch(error => {
+        alert("Error fetching request: " + error.message);
+        return;
+      });
     }
   }
 
@@ -97,11 +151,8 @@ function App() {
       .then(response => response.json())
       .then(response => {
         if (response.price !== undefined && response.price !== null) {
-          const outputEl = document.getElementById("outputPrice");
-          outputEl.innerText = "$" + response.price.toFixed(2);
-          outputEl.classList.remove("green-flash");
-          void outputEl.offsetWidth; 
-          outputEl.classList.add("green-flash");
+            const outputEl = document.getElementById("outputPrice");
+            outputEl.innerText = "$" + response.price.toFixed(2);
         } else {
           alert("Server side issue: " + response.error);
           return;
@@ -132,11 +183,8 @@ function App() {
       .then(response => response.json())
       .then(response => {
         if (response.price !== undefined && response.price !== null) {
-          const outputEl = document.getElementById("outputPrice");
-          outputEl.innerText = "$" + response.price.toFixed(2);
-          outputEl.classList.remove("green-flash");
-          void outputEl.offsetWidth; 
-          outputEl.classList.add("green-flash");
+            const outputEl = document.getElementById("outputPrice");
+            outputEl.innerText = "$" + response.price.toFixed(2);
         } else {
           alert("Server side issue: " + response.error);
           return;
@@ -156,7 +204,7 @@ function App() {
   return (
     <div className="App">
       <header className="header">
-        <h1 className="site-title">Options Pricer</h1>
+        <h1 className="site-title">Greeks + Heat</h1>
       </header>
       <div className="intro">
         <p>
@@ -167,6 +215,9 @@ function App() {
           <br/>
           <br/>
           <strong> DISCLAIMER: The dynamic heatmap generator will only return accurate reports during market hours (9:30 AM - 4:00 PM EST) as the yfinance API lists bid and ask prices for options as 0.00 during after hours.</strong> 
+          <br/>
+          <br/>
+          <strong> NOTE: Please wait 10-15 seconds for the heatmap to load as compressing and sending images has noticable latency</strong>
         </p>
       </div>
       <div className="userInputs">
@@ -200,14 +251,21 @@ function App() {
       </div>
       <div className = "buttonContainer">
         <button onClick={setPriceOutput} className="priceButton">Generate Your Option Price</button>
-        <button onClick={setHeatmapOutput} className="heatmapButton">Generate Dynamic Heatmap</button>
       </div>
       <div className="outputContainer">
         <output className="outputPrice" id="outputPrice">$0.00</output>
       </div>
+      <div className = "heatmapContainer">
+        <button onClick={setHeatmapOutput} className="heatmapButton">Generate Your Dynamic Heatmap</button>
+      </div>
       <div className="heatmapOutput">
         <img id="heatmapImage" className="heatMapImage" alt="Heatmap" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="/>
       </div>
+        <div className = "reset">
+          <footer>
+            <button onClick={resetAll} className="resetButton"> Reset Inputs</button>
+          </footer>
+        </div>
     </div>
   );
 }
