@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pricer import (call_option, put_option)
 from heatmap import (call_option_heatmap, put_option_heatmap)
+from greeks import get_greeks
 
 app = Flask(__name__)
 CORS(app)
@@ -66,6 +67,22 @@ def get_put_heatmap():
         return jsonify({'error' : str(e)}), 500
     
 
+@app.route('api/get-greeks', method=["POST"])
+def get_greeks():
+    data = request.json()
+    try:
+        result = get_greeks(
+            opt_type=data['opt_type'],
+            ticker=data['ticker'],
+            strike_price=data['strike_price'],
+            option_vol=data['option_vol'],
+            period_vol=data['period_vol'],
+            period_opt=data['period_opt'],
+            output=data['output']
+        )
+        return jsonify({'Delta' : result})
+    except Exception as e:
+        return jsonify({'error' : str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=8000)

@@ -14,7 +14,7 @@ risk_free_rate = 0.041
 
 def get_greeks(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output):
     data = yf.Ticker(ticker)
-    hist = data.history
+    hist = data.history(period="1d")
     stock_price = hist["Close"].iloc[-1]
     output = {
         "Delta": get_delta(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output, stock_price),
