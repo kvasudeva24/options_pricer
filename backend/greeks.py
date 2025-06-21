@@ -17,10 +17,10 @@ def get_greeks(opt_type, ticker, strike_price ,option_vol, period_vol, period_op
     hist = data.history(period="1d")
     stock_price = hist["Close"].iloc[-1]
     output = {
-        "Delta": get_delta(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output, stock_price),
-        "Gamma": get_gamma(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output, stock_price),
-        "Theta": get_theta(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output, stock_price),
-        "Rho": get_rho(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output, stock_price)
+        'Delta': get_delta(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output, stock_price),
+        'Gamma': get_gamma(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output, stock_price),
+        'Theta': get_theta(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output, stock_price),
+        'Rho': get_rho(opt_type, ticker, strike_price ,option_vol, period_vol, period_opt, output, stock_price)
     }
     return output
 

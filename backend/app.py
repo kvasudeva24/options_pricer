@@ -67,9 +67,9 @@ def get_put_heatmap():
         return jsonify({'error' : str(e)}), 500
     
 
-@app.route('api/get-greeks', method=["POST"])
-def get_greeks():
-    data = request.json()
+@app.route('/api/get-greeks', methods=["POST"])
+def get_greek_symbols():
+    data = request.get_json()
     try:
         result = get_greeks(
             opt_type=data['opt_type'],
@@ -80,7 +80,7 @@ def get_greeks():
             period_opt=data['period_opt'],
             output=data['output']
         )
-        return jsonify({'Delta' : result})
+        return jsonify(result)
     except Exception as e:
         return jsonify({'error' : str(e)}), 500
 

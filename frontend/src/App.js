@@ -197,6 +197,67 @@ function App() {
     }
   }
 
+  function getGreekSymbols(){
+      const volatilityMap = {
+      "select": 0,
+      "historical": 1,
+      "parkinsons": 2,
+      "garman-klass": 3,
+      "rogers-satchel": 4,
+      "yang-zhang": 5
+    };
+
+      const optionMap = {
+      "select": -1,
+      "call": 0,
+      "put": 1
+    };
+
+    const optionChoice = optionMap[document.getElementById("optionInput").value];
+    const userTicker = document.getElementById("tickerInput").value;
+    const userStrike = parseFloat(document.getElementById("strikeInput").value);
+    const daysExpiry = parseInt(document.getElementById("daysInput").value);
+    const volChoice = volatilityMap[document.getElementById("volatilityInput").value];
+    const periodVol = parseInt(document.getElementById("volatilityDaysInput").value);
+    let currOptionOut = document.getElementById("outputPrice").innerText;
+    currOptionOut = currOptionOut.substring(1);
+    const optionOut = parseFloat(currOptionOut);
+
+    const data = {
+      opt_type: optionChoice,
+      ticker: userTicker,
+      strike_price: userStrike,
+      option_vol: volChoice,
+      period_vol: periodVol,
+      period_opt: daysExpiry,
+      output: optionOut
+    };
+
+    if(optionChoice === -1 || !userTicker || volChoice === 0 || periodVol < 2 || daysExpiry === 0 || isNaN(optionOut) || isNaN(userStrike)){
+      alert("Please enter valid inputs");
+      return;
+    }
+
+    const endpoint = 'http://localhost:8000/api/get-greeks';
+
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(response => {
+
+    })
+    .catch(error => {
+      alert("Error fetching request: " + error.message);
+      return;
+    })
+
+
+  }
 
 
 
