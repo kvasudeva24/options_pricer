@@ -316,6 +316,9 @@ function App() {
       <div className="outputContainer">
         <output className="outputPrice" id="outputPrice">$0.00</output>
       </div>
+      <div className="greeksOutput">
+        {/* put outputs for the 4 greeks */}
+      </div>
       <div className = "heatmapContainer">
         <button onClick={setHeatmapOutput} className="heatmapButton">Generate Your Dynamic Heatmap</button>
       </div>
