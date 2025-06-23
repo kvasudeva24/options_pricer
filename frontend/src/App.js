@@ -345,7 +345,7 @@ function App() {
         <output className="outputGreek" id="outputRho">0.00</output>
       </div>
       <div className = "greeksLabel">
-        <p>Delta Gamma Theta Rho</p>
+        <p className="greeksID">Delta ------- Gamma ------ Theta --------- Rho</p>
       </div>
       <div className = "heatmapContainer">
         <button onClick={setHeatmapOutput} className="heatmapButton">Generate Your Dynamic Heatmap</button>
