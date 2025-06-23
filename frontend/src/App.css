@@ -290,3 +290,46 @@ body {
   background-color: #6a0fba;
   color: white;
 }
+
+.outputGreek{
+  background-color: #1c1c1c;
+  color: #10a5e6;
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 48px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: color 1s ease, transform 0.3s ease;
+}
+
+.greeksButton{
+  width: 175px;
+  height: 50px;
+  font-size: large;
+  color: white;
+  background-color: #6a0fba;
+  font-family: "Darumadrop One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  border-radius: 10px;
+}
+
+.greeksButton:hover{
+  cursor: pointer;
+  background-color:#10a5e6;
+  color: white;
+}
+
+.gButton{
+  margin-top: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.greeksOutput{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

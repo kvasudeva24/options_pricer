@@ -316,8 +316,14 @@ function App() {
       <div className="outputContainer">
         <output className="outputPrice" id="outputPrice">$0.00</output>
       </div>
+      <div className="gButton">
+        <button className="greeksButton">Get Greeks</button>
+      </div>
       <div className="greeksOutput">
-        {/* put outputs for the 4 greeks */}
+        <output className="outputGreek" id="outputDelta">0.00</output>
+        <output className="outputGreek" id="outputGamma">0.00</output>
+        <output className="outputGreek" id="outputTheta">0.00</output>
+        <output className="outputGreek" id="outputRho">0.00</output>
       </div>
       <div className = "heatmapContainer">
         <button onClick={setHeatmapOutput} className="heatmapButton">Generate Your Dynamic Heatmap</button>
