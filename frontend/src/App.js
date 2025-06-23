@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 import './index.js';
+import loadingImg from './loading.png';
+
 
 function App() {
   const [optionType, setOptionType] = useState('select'); 
@@ -19,10 +21,19 @@ function App() {
     document.getElementById("volatilityInput").value = "select";
 
     document.getElementById("outputPrice").innerText = "$0.00"
+
+    document.getElementById("outputDelta").innerText = "0.00"
+    document.getElementById("outputTheta").innerText = "0.00"
+    document.getElementById("outputGamma").innerText = "0.00"
+    document.getElementById("outputRho").innerText = "0.00"
   }
 
 
   function setHeatmapOutput() {
+    //set heatmap to loading image
+    let heatmapOut = document.getElementById("heatmapImage");
+    heatmapOut.src = loadingImg;
+
     const volatilityMap = {
       "select": 0,
       "historical": 1,
@@ -249,7 +260,15 @@ function App() {
     })
     .then(response => response.json())
     .then(response => {
+      let deltaOut = document.getElementById("outputDelta");
+      let gammaOut = document.getElementById("outputGamma");
+      let thetaOut = document.getElementById("outputTheta");
+      let rhoOut = document.getElementById("outputRho");
 
+      deltaOut.innerText = response['Delta'].toFixed(2);
+      gammaOut.innerText = response['Gamma'].toFixed(2);
+      thetaOut.innerText = response['Theta'].toFixed(2);
+      rhoOut.innerText = response['Rho'].toFixed(2);
     })
     .catch(error => {
       alert("Error fetching request: " + error.message);
@@ -317,13 +336,16 @@ function App() {
         <output className="outputPrice" id="outputPrice">$0.00</output>
       </div>
       <div className="gButton">
-        <button className="greeksButton">Get Greeks</button>
+        <button onClick={getGreekSymbols} className="greeksButton">Get Greeks</button>
       </div>
       <div className="greeksOutput">
         <output className="outputGreek" id="outputDelta">0.00</output>
         <output className="outputGreek" id="outputGamma">0.00</output>
         <output className="outputGreek" id="outputTheta">0.00</output>
         <output className="outputGreek" id="outputRho">0.00</output>
+      </div>
+      <div className = "greeksLabel">
+        <p>Delta Gamma Theta Rho</p>
       </div>
       <div className = "heatmapContainer">
         <button onClick={setHeatmapOutput} className="heatmapButton">Generate Your Dynamic Heatmap</button>
@@ -333,7 +355,7 @@ function App() {
       </div>
         <div className = "reset">
           <footer>
-            <button onClick={resetAll} className="resetButton"> Reset Inputs</button>
+            <button onClick={resetAll} className="resetButton"> Reset All</button>
           </footer>
         </div>
     </div>
