@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import './index.js';
-import loadingImg from './loading.png';
+import loadingGif from './l.gif';
 
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
   function setHeatmapOutput() {
     //set heatmap to loading image
     let heatmapOut = document.getElementById("heatmapImage");
-    heatmapOut.src = loadingImg;
+    heatmapOut.src = loadingGif;
 
     const volatilityMap = {
       "select": 0,
