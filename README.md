@@ -33,8 +33,12 @@ Built using:
 ### 1. **Fork and Clone the Repo**
 
 1. Hit the **Fork** button on GitHub to copy the repo to your account.  
-2. Clone the forked repo into your machine:
+2. Clone the forked repo into your machine (VSCode is preferred)
 
-```bash
-git clone https://github.com/YOUR_USERNAME/greeks-heat.git
-cd greeks-heat
+### 2. **Get the environment set up**
+
+1. Open a new terminal and run these commands:
+
+'''bash
+cd backend
+
