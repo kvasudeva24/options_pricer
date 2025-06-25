@@ -39,16 +39,20 @@ Built using:
 
 1. Open a new terminal and run these commands:
 
-```bash
+```zsh
 python -m venv venv
 source venv/bin/activate
 ```
 
 This will create and run the virtual environment. Next:
 
-```bash
+```zsh
 cd backend 
 pip install -r requirements.txt
 ```
 
-This will install all our dependencies. Now, we need to check for port collisions before we launch our backend.
+This will install all our dependencies. Now, we need to check for port collisions before we launch our backend. In the terminal run:
+
+```zsh 
+lsof -i :8000
+```
