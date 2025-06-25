@@ -61,9 +61,31 @@ If you dont see anything pop up then you are good to go onto Step 3.
 If you do, run the command again with different numbered ports until nothing pops up.
 With the empty port number, go to:
 
-# app.py
-# App.js 
+app.py
+App.js
 
 and change all instances of 8000 to the free port number.
 
 ### 3. **Running the environment**
+
+In a base terminal, 
+
+```zsh
+cd backend
+python app.py
+```
+
+Then open a new terminal in the lower right hand corner of VSCode,
+
+```zsh 
+cd frontend
+npm install
+npm start
+```
+
+A new window with the site should pop up, but if not click the link the last terminal prompt creates.
+
+### 4. You're good to go!
+Enjoy using Greeks + Heat for your options information.
+
+Made by: Kartik Vasudeva
