@@ -56,3 +56,14 @@ This will install all our dependencies. Now, we need to check for port collision
 ```zsh 
 lsof -i :8000
 ```
+
+If you dont see anything pop up then you are good to go onto Step 3.
+If you do, run the command again with different numbered ports until nothing pops up.
+With the empty port number, go to:
+
+## app.py
+## App.js 
+
+and change all instances of 8000 to the free port number.
+
+### 2. **Running the environment**
