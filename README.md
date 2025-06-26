@@ -89,6 +89,6 @@ A new window with the site should pop up, but if not click the link the last ter
 Enjoy using Greeks + Heat for your options information.
 
 ### 5. Upcoming Ideas!!!
-In the process of Dockerizing this app. 
+In the process of Dockerizing this app. Want to make ease of access easier and faster. Stay tuned!
 
 Made by: Kartik Vasudeva
