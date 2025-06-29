@@ -284,7 +284,7 @@ function App() {
   return (
     <div className="App">
       <header className="header">
-        <h1 className="site-title">Greeks + Heat</h1>
+        <h1 className="site-title">Pyros Options Pricer</h1>
       </header>
       <div className="intro">
         <p>
