@@ -1,6 +1,6 @@
-# 🔥 Greeks + Heat
+# 🔥 Pyros Options Pricer
 
-Welcome to **Greeks + Heat**, a full-stack interactive web application designed to visualize and analyze **options greeks** and **price heatmaps** for equity derivatives. Whether you're a finance enthusiast or an active trader, this project helps you better understand how strike prices and expiration dates impact the greeks of call and put options using visual heatmaps.
+Welcome to **Pyros Options Pricer**, a full-stack interactive web application designed to visualize and analyze **options greeks** and **price heatmaps** for equity derivatives. Whether you're a finance enthusiast or an active trader, this project helps you better understand how strike prices and expiration dates impact the greeks of call and put options using visual heatmaps.
 
 Built using:
 
