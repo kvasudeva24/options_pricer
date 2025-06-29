@@ -9,12 +9,12 @@ Built using:
 - 📊 Matplotlib + NumPy for data processing and heatmap generation  
 - 📦 yFinance for real-time options data  
 - 🎨 Styled for a clean, responsive UI/UX  
-
+- 🐳 Docker to streamline the deployment process  
 ---
 
 ## 📦 Features
 
-- Visual heatmaps of **Delta, Gamma, Theta, Vega, Rho**
+- Visual heatmaps of **Delta, Gamma, Theta, Rho**
 - Interactive dropdowns for **option type**, **volatility model**, **time to expiry**, and **strike price**
 - API integration between frontend and backend
 - Support for different volatility calculation methods (Historical, Parkinson’s, Yang-Zhang, etc.)
@@ -37,58 +37,18 @@ Built using:
 
 ### 2. **Get the environment set up**
 
-1. Open a new terminal and run these commands:
+1. Open a new terminal and run this commands:
 
 ```zsh
-python -m venv venv
-source venv/bin/activate
+docker-compose up --build
 ```
 
-This will create and run the virtual environment. Next:
+That's it! That's all you have to do to run it. To safely stop running the app, open a new terminal using the '+' icon and run:
 
 ```zsh
-cd backend 
-pip install -r requirements.txt
+docker-compose down
 ```
 
-This will install all our dependencies. Now, we need to check for port collisions before we launch our backend. In the terminal run:
-
-```zsh 
-lsof -i :8000
-```
-
-If you dont see anything pop up then you are good to go onto Step 3.
-If you do, run the command again with different numbered ports until nothing pops up.
-With the empty port number, go to:
-
-app.py
-App.js
-
-and change all instances of 8000 to the free port number.
-
-### 3. **Running the environment**
-
-In a base terminal, 
-
-```zsh
-cd backend
-python app.py
-```
-
-Then open a new terminal in the lower right hand corner of VSCode,
-
-```zsh 
-cd frontend
-npm install
-npm start
-```
-
-A new window with the site should pop up, but if not click the link the last terminal prompt creates.
-
-### 4. You're good to go!
-Enjoy using Greeks + Heat for your options information.
-
-### 5. Upcoming Ideas!!!
-In the process of Dockerizing this app. Want to make ease of access easier and faster. Stay tuned!
+Or you can hit CTRL + C twice, but the terminal command is safer. ENJOY!!!
 
 Made by: Kartik Vasudeva
